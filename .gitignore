@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+target/
+.env
+.env.*
+!.env.example
+data/
+uploads/
+*.log
+*.tsbuildinfo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+ALTER TABLE accounts ADD COLUMN lifetime_payment VARCHAR(255);
+ALTER TABLE accounts ADD COLUMN email_verified BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE accounts ADD COLUMN email_reminders BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE accounts ADD COLUMN verification_hash VARCHAR(64);
+ALTER TABLE accounts ADD COLUMN verification_expires TIMESTAMP WITH TIME ZONE;
+ALTER TABLE accounts ADD COLUMN last_digest DATE;
+ALTER TABLE accounts ADD COLUMN language VARCHAR(2) NOT NULL DEFAULT 'en';

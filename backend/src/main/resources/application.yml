@@ -1,0 +1,51 @@
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: 8080
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      timeout: 12h
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${COOKIE_SECURE:false}
+spring:
+  application:
+    name: applypilot
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./data/applypilot;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH}
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  session:
+    jdbc:
+      initialize-schema: never
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+app:
+  origin: ${APP_ORIGIN:http://localhost:3000}
+  registration: ${REGISTRATION_ENABLED:true}
+  billing: ${BILLING_ENABLED:false}
+  storage-path: ${STORAGE_PATH:./uploads}
+  openai-key: ${OPENAI_API_KEY:}
+  openai-model: ${OPENAI_MODEL:gpt-4.1-mini}
+  google-id: ${GOOGLE_CLIENT_ID:}
+  google-secret: ${GOOGLE_CLIENT_SECRET:}
+  s3-bucket: ${S3_BUCKET:}
+  s3-endpoint: ${S3_ENDPOINT:}
+  s3-region: ${S3_REGION:eu-central-2}
+  stripe-key: ${STRIPE_SECRET_KEY:}
+  stripe-webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  stripe-plus-price: ${STRIPE_PLUS_PRICE:}
+  stripe-pro-price: ${STRIPE_PRO_PRICE:}
+  stripe-lifetime-price: ${STRIPE_LIFETIME_PRICE:}
+  resend-key: ${RESEND_API_KEY:}
+  email-from: ${EMAIL_FROM:}
