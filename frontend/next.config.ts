@@ -1,4 +1,7 @@
 import type { NextConfig } from 'next';
+const apiOrigin = process.env.API_INTERNAL_HOSTPORT
+  ? `http://${process.env.API_INTERNAL_HOSTPORT}`
+  : process.env.API_INTERNAL_URL || 'http://127.0.0.1:8080';
 const config: NextConfig = {
   agentRules: false,
   devIndicators: false,
@@ -7,15 +10,15 @@ const config: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_INTERNAL_URL || 'http://127.0.0.1:8080'}/api/:path*`,
+        destination: `${apiOrigin}/api/:path*`,
       },
       {
         source: '/oauth2/:path*',
-        destination: `${process.env.API_INTERNAL_URL || 'http://127.0.0.1:8080'}/oauth2/:path*`,
+        destination: `${apiOrigin}/oauth2/:path*`,
       },
       {
         source: '/login/oauth2/:path*',
-        destination: `${process.env.API_INTERNAL_URL || 'http://127.0.0.1:8080'}/login/oauth2/:path*`,
+        destination: `${apiOrigin}/login/oauth2/:path*`,
       },
     ];
   },

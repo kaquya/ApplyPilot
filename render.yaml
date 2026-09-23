@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=https://render.com/schema/render.yaml.json
+# Paid Frankfurt deployment. Review Render's cost estimate before applying.
+# Setup and provider credentials: docs/render.md
+services:
+  - type: pserv
+    name: applypilot-api
+    runtime: docker
+    region: frankfurt
+    plan: 1c-2g
+    branch: main
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    autoDeployTrigger: checksPass
+    disk:
+      name: applypilot-documents
+      mountPath: /app/uploads
+      sizeGB: 5
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: SERVER_ADDRESS
+        value: 0.0.0.0
+      - key: PORT
+        value: '8080'
+      - key: COOKIE_SECURE
+        value: 'true'
+      - key: STORAGE_PATH
+        value: /app/uploads
+      # Use https://setup.invalid until Render assigns the frontend URL,
+      # then replace this in the API service's Environment settings.
+      - key: APP_ORIGIN
+        sync: false
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: applypilot-db
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: applypilot-db
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: applypilot-db
+          property: database
+      - key: DATABASE_USER
+        fromDatabase:
+          name: applypilot-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: applypilot-db
+          property: password
+      # Optional provider keys are added in the dashboard after deployment.
+      # BILLING_ENABLED defaults to false; omitted so later dashboard edits survive syncs.
+
+  - type: web
+    name: applypilot-web
+    runtime: docker
+    region: frankfurt
+    plan: 0.5c-512mb
+    branch: main
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    autoDeployTrigger: checksPass
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: '3000'
+      - key: API_INTERNAL_HOSTPORT
+        fromService:
+          name: applypilot-api
+          type: pserv
+          property: hostport
+
+databases:
+  - name: applypilot-db
+    region: frankfurt
+    plan: 0.1c-256mb
+    postgresMajorVersion: '17'
+    databaseName: applypilot
+    user: applypilot
+    diskSizeGB: 5
+    ipAllowList: []

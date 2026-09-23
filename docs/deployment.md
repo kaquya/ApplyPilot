@@ -1,5 +1,7 @@
 # Deployment and integrations
 
+For Render, use the repository's `render.yaml` and the [step-by-step Render guide](render.md).
+
 ## Coolify and Cloudflare
 
 1. Add this repository as a Docker Compose resource in Coolify using `compose.yml`.

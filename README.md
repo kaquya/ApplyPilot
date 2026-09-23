@@ -39,7 +39,7 @@ docker compose up --build -d
 
 The application listens on http://localhost:3000. PostgreSQL and the API are private to the Docker network. Named volumes persist database records, sessions and uploaded files. **Do not remove these volumes unless you intend to erase the data.**
 
-See [deployment and integrations](docs/deployment.md) for Coolify, HTTPS, Google sign-in, object storage, OpenAI, Stripe and Resend configuration.
+Deploy with the [Render Blueprint](render.yaml) and follow the [Render setup guide](docs/render.md) for hosting, AI, Google login and payments. See [deployment and integrations](docs/deployment.md) for Coolify and additional integration details.
 
 ## Included
 

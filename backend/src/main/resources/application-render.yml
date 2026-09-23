@@ -1,0 +1,9 @@
+# Render supplies discrete connection properties, not a Java JDBC URL.
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT:5432}/${DATABASE_NAME}?sslmode=${DATABASE_SSL_MODE:require}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
